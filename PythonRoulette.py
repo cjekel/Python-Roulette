@@ -109,10 +109,40 @@ class roulette:
                 print('Error: You have chosen an incorrect roulette style!')
                 print('The possible roulette styles are American or French')
                 print('EX: Set roulette style to American by roulette.(rouletteStyle="American")')
+        #   Begin a color choice game
+        elif self.betType is 'Color':
+            if betPick is 'Red' or betPick is 'Black':
+                print('--- Spinning the '+self.rouletteStyle+' roullete wheel ---')
+                #   the picked bet must be an interger between -1 and 36
+                theRoll = random.randint(-1,36)
+                
+                #   asign the color history
+                self.recordColorHistory(theRoll)
+                
+                
+                print('The ball has landed on '+str(theRoll)+' '+str(self.colorHistory[-1]))
+                print('You bet the ball would land on '+betPick)
+                self.rollHistory.append(theRoll)
+                if self.colorHistory[-1] is betPick:
+                    print('**** !!! You have won !!! ***')
+                    print('The payout is 1 to 1')
+                    payout = 1.0*float(betAmmount)
+                    self.bankAccount = self.bankAccount + payout
+                    print(str(payout)+' has been added to your account')
+                    print('Your new account balance is '+str(self.bankAccount))
+                    print('*** End of Roll, Please roll again! ***')
+                else:
+                    print('Oh No!, You have lost')
+                    self.bankAccount = self.bankAccount - float(betAmmount)
+                    print('Your bet of '+str(betAmmount)+' has been removed from your account')
+                    print('Your new account balance is '+str(self.bankAccount))
+                    print('--- End of Roll, Please roll again! ---')
+            else:
+                print('Error: You have picked an incorrect color. Acceptable colors are Red and Black.')
         #    You have chosen an incorrect betting game type            
         else:
             print('Error: We have yet to code this type of betting')
-            print('The possible betting game types are: Straight...')
+            print('The possible betting game types are: Straight, Color')
             print('EX: Set betting game type to Straight with roulette.(betType="Straight")')
 
     def recordColorHistory(self, theRoll):
@@ -125,3 +155,11 @@ class roulette:
         #   if the roll wasn't black or red, then it was green
         else:
             self.colorHistory.append('Green')
+    
+    #def getColor(self, theRoll):
+    #    if theRoll in self.red:
+    #        return('Red')
+    #    if theRoll in self.black:
+    #        return('Black')
+    #    else:
+    #        return('Green')
