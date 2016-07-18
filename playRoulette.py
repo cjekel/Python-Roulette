@@ -18,7 +18,7 @@ from PythonRoulette import *
 #play.roll(1,-1)
 
       
-play = roulette(rouletteStyle='American', bankAccount=150.0, betType='Color')
+play = roulette(rouletteStyle='American', bankAccount=1000.0, betType='Color')
 
 #play.roll(50,'Black')
 #        
@@ -50,9 +50,12 @@ play.rouletteStyle = 'French'
 #play.betType = 'Penta'
 #play.roll(5, [1,2,3,4,-1])
 
-play.betType = 'EvenOdd'
-play.roll(5, 'Even')
+#play.betType = 'EvenOdd'
+#play.roll(5, 'Even')
 
+play.betType ='MultiStraight'
+
+play.roll(5,[-1,2])
 
 
 ##   plot roll history

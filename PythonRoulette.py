@@ -533,9 +533,47 @@ class roulette:
             else:
                 print('Error: You have picked an incorrect bet. Acceptable bets are Odd or Even.')
                 return()
+                
+        #   Begin a multi bet Straight game
+        elif self.betType is 'MultiStraight':
+            validBets = False
+            if self.rouletteStyle is 'American':
+                validBets = self.checkBets(betPick, -1)
+            elif self.rouletteStyle is 'French':
+                validBets = self.checkBets(betPick, 0)
+            #   you have chosen an incorrect roulette style
+            else:
+                print('Error: You have chosen an incorrect roulette style!')
+                print('The possible roulette styles are American or French')
+                print('EX: Set roulette style to American by roulette.(rouletteStyle="American")')
+                return()  
+            
+            #   let the roll begin
+            if validBets is True:
+                theRoll = self.rollTheRouletteWheel()
+                print('You bet the ball would land on '+str(betPick))
+
+                if theRoll in betPick:
+                    print('**** !!! You have won !!! ***')
+                    print('The payout is 35 to 1')
+                    payout = 35.0*float(betAmmount)
+                    #   determine the ammount to be subtracted from your account
+                    deductMoney = (len(betPick) - 1.0) * float(betAmmount)
+                    self.bankAccount = self.bankAccount + payout - deductMoney
+                    print(str(payout)+' has been added to your account')
+                    print(str(deductMoney)+' has been removed from your account')
+
+                    print('Your new account balance is '+str(self.bankAccount))
+                    print('*** End of Roll, Please roll again! ***')
+                else:
+                    print('Oh No!, You have lost')
+                    self.bankAccount = self.bankAccount - (len(betPick)*float(betAmmount))
+                    print('Your bet of '+str(len(betPick)*float(betAmmount))+' has been removed from your account')
+                    print('Your new account balance is '+str(self.bankAccount))
+                    print('--- End of Roll, Please roll again! ---')
         #    You have chosen an incorrect betting game type            
         else:
             print('Error: We have yet to code this type of betting')
-            print('The possible betting game types are: Straight, Color, Row, Split, Street, Corner, Penta, Line, Dozen, EvenOdd')
+            print('The possible betting game types are: Straight, Color, Row, Split, Street, Corner, Penta, Line, Dozen, EvenOdd, MultiStraight')
             print('EX: Set betting game type to Straight with roulette.(betType="Straight")')
 
